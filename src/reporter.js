@@ -1,4 +1,5 @@
 import {Raven} from 'raven-js'
+
 export function patchStoreToAddCrashReporting(store) {
   let next = store.dispatch
   store.dispatch = function dispatchAndReportErrors(action) {

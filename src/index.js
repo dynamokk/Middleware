@@ -1,16 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
+
+import { createStore, applyMiddleware } from 'redux'
 import Counter from './components/Counter'
 import counter from './reducers'
+import thunk from 'redux-thunk'
 import { increment, decrement } from './actions'
-//attempt #2
-//import { dispatchAndLog } from './logger'
+import { logger } from './middlewares/logger'
+import { crashReporter } from './middlewares/crashReporter'
+import { timeoutScheduler } from './middlewares/timeoutScheduler'
 
-import { patchStoreToAddLogging } from './loggerMonkey'
-import { patchStoreToAddCrashReporting } from './reporter'
+let middleware = [thunk];
+if (process.env.NODE_ENV !== 'production') { 
+    middleware = [...middleware,timeoutScheduler, logger, crashReporter];
+} 
 
-const store = createStore(counter)
+const store = createStore(counter, applyMiddleware(...middleware))
+
 const rootEl = document.getElementById('root')
 
 const render = () => ReactDOM.render(
@@ -18,32 +24,17 @@ const render = () => ReactDOM.render(
     value={store.getState()}
     onIncrement={() =>
       {
-        const action = increment
-        store.dispatch(action)
-        //attempt #2
-        //dispatchAndLog(store, action);
-        /*
-        //attempt #1
-        console.log('dispatching', action)
-        store.dispatch(action)
-        console.log('next state', store.getState())
-        */
-      }
+        store.dispatch(increment)
+      } 
     }
     onDecrement={() =>
       {
         store.dispatch(decrement) 
-        //attempt #2
-        //dispatchAndLog(store, decrement);
       }
     }
   />,
   rootEl
 )
-
-//attempt #3
-patchStoreToAddLogging(store);
-patchStoreToAddCrashReporting(store);
 
 
 

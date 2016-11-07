@@ -7,7 +7,7 @@ It provides a third-party extension point between dispatching an action, and the
 People use Redux middleware for logging, crash reporting, talking to an asynchronous API, routing, and more.
 
 Example:
-git clone https://github.com/dynamokk/Middleware.git
-cd AppMiddleware
-npm install
-npm start
+git clone https://github.com/dynamokk/Middleware.git;
+cd AppMiddleware;
+npm install;
+npm start;

@@ -3,4 +3,7 @@ Middleware of Redux
 
 
 
-git clone https://github.com/dynamokk/Middlewarecd AppMiddlewarenpm installnpm start
+git clone https://github.com/dynamokk/Middlewarecd
+cd AppMiddleware
+npm install
+npm start
